@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Vue JS</title>
+	<script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+	
+
+    <div id = "contenedor">
+
+        <hr>
+        <input type="text" v-model="numero1">
+        <input type="text" v-model="numero2">
+
+        <button @click="suma">
+            Suma
+        </button>
+
+        <h1>
+            {{resultado}}
+        </h1>
+
+    </div>
+
+	<script type="text/javascript">
+	    const {createApp} = Vue ; 
+
+        const app = createApp({
+            data(){
+                return{
+                    numero1: 0,
+                    numero2: 0,
+                    resultado: 0
+                }
+            },
+            methods:{
+                suma(){
+                    this.resultado = parseInt(this.numero1) + parseInt(this.numero2);
+                    
+                }
+            }
+        }).mount('#contenedor')
+
+        
+	</script>
+</body>
+</html>
