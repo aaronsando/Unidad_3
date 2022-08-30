@@ -11,6 +11,18 @@
 
     <div id = "contenedor">
 
+        <ol>
+            <li v-for = "item in lepes">
+                {{item.name}} : <span> {{item.role}}</span>
+            </li>
+        </ol>
+
+        <input type="text" v-model="name_lepe">
+        <input type="text" v-model="rol">
+        <button @click="save">
+            Save lepes
+        </button>
+
         <hr>
         <input type="text" v-model="numero1">
         <input type="text" v-model="numero2">
@@ -23,6 +35,16 @@
             {{resultado}}
         </h1>
 
+        <input type="text" v-model="age">
+
+        <h1 v-if="age < 18">
+            No pasa
+        </h1>
+
+        <h1 v-if="age > 18">
+            Pasa
+        </h1>
+
     </div>
 
 	<script type="text/javascript">
@@ -33,15 +55,23 @@
                 return{
                     numero1: 0,
                     numero2: 0,
-                    resultado: 0
+                    resultado: 0,
+                    age: 0,
+                    lepes: [
+                    {name: 'Aaron', role: 'Jefe'}],
+                    name_lepe: '',
+                    rol: ''
                 }
             },
             methods:{
                 suma(){
                     this.resultado = parseInt(this.numero1) + parseInt(this.numero2);
-                    
-                }
+                },
+                save(){
+                this.lepes.push({name:this.name_lepe,role:this.rol})
             }
+            },
+           
         }).mount('#contenedor')
 
         
