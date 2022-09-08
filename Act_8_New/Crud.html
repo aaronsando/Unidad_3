@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Actividad  8</title>
+    <script src="https://unpkg.com/vue@3"></script> 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+        table, th, td{
+            border: 1px solid black;
+        }
+    </style> 
+    </head>
+    <body>
+        <div id="contenedor">
+            
+            <h2>Lista Usuarios Registrados</h2>
+
+            <button @click="add">
+                Agregar
+            </button>
+
+            <table v-if="(inAction=='show')">
+                <thead>
+                    <tr>
+                        <td>
+                            #ID
+                        </td>
+                        <td>
+                            Nombre
+                        </td>
+                        <td>
+                            Usuario
+                        </td>
+                        <td>
+                            Correo
+                        </td>
+                        <td>
+                            Numero
+                        </td>
+                        <td>
+                            Sitio Web
+                        </td>
+                        <td>
+                            Acciones
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(u,index) in users">
+                        <td>
+                            {{u.id}}
+                        </td>
+                        <td>
+                            {{u.name}}
+                        </td>
+                        <td>
+                            {{u.username}}
+                        </td>
+                        <td>
+                            {{u.email}}
+                        </td>
+                        <td>
+                            {{u.phone}}
+                        </td>
+                        <td>
+                            {{u.website}}
+                        </td>
+                        <td>
+                            <button @click="action(index)">Editar</button>
+                            <button @click="remove(index)">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+         <form v-if="(inAction=='')" >
+             <fieldset>
+                <legend>Agregar usuario</legend>
+                <label>Nombre </label>
+                <input type="name" v-model="name" placeholder="fulanito"><br><br>
+                <label>Usuario </label>
+                <input type="username" v-model="username" placeholder="fulanito3000"><br><br>
+                <label>Telefono </label>
+                <input type="phone" v-model="phone" placeholder="6241234567"><br><br>
+                <label>Sitio Web </label>
+                <input type="website" v-model="website" placeholder="page.com"><br><br>
+                <label>Correo Electronico </label>
+                <input type="email" v-model="email" placeholder="ejemplo@email.com"><br><br>
+                <label>Contraseña </label>
+                <input type="password" v-model="password" placeholder="********"><br><br>
+
+                <button @click="save">Guardar</button>
+                <button @click="editar(index)">Actualizar</button>
+                <button @click="cancel">Cancel</button>
+             </fieldset>
+         </form>
+
+        </div>
+            <script type="text/javascript">
+                const {createApp}=Vue;  
+                var i=11; 
+                createApp({
+                    data(){
+                        return{
+                            users: [],
+                            id: 0,
+                            name: '',
+                            username: '',
+                            email: '',
+                            password: '',
+                            phone: '',
+                            website: '',
+                            inAction: 'show'
+                        }
+                    }, methods:{
+                        action(u){
+                            this.name=this.users[u].name;
+                            this.username=this.users[u].username;
+                            this.email=this.users[u].email;
+                            this.password=this.users[u].password;
+                            this.phone=this.users[u].phone;
+                            this.website=this.users[u].website;
+                            this.inAction="";
+                        },
+                        cancel(){
+                            this.inAction = 'show';
+                        },
+                        save(e){
+                            this.inAction="show";
+                            this.users.push({id:this.id, name:this.name, email:this.email, password:this.password, username:this.username, phone:this.phone, website:this.website})
+                            i++;
+                            swal("Accion exitosa","Has agregado un usuario","success")
+                        },
+                        remove(index){
+                            this.users.splice(index,1);
+                        },
+                        add(e){
+                            this.id=i;
+                            this.name="";
+                            this.username="";
+                            this.email="";
+                            this.phone="";
+                            this.website="";
+                            this.inAction="";
+                        },
+                        //Este metodo no funciona unu
+                        editar(index){
+                            this.users[index].name=this.name;
+                            this.users[index].username=this.username;
+                            this.users[index].email=this.email;
+                            this.users[index].phone=this.phone;
+                            this.users[index].website=this.website;
+                            console.log("basta")
+                            swal("Accion exitosa","Cambios guardados","success")
+                            this.inAction="show";
+                        }
+                    },
+                    mounted(){
+                        fetch('users.json')
+                        .then((res) => res.json())
+                        .then((json) => (this.users = json))
+                        .catch((err) => (console.log(err)))
+                    }
+                }).mount ('#contenedor')  
+            </script>
+</body>
+</html>

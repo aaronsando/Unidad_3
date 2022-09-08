@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Actividad 8</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    </head>
+    <body>
+        <div id="contenedor">
+            <form>
+                <fieldset>
+                    <legend>
+                        Login 
+                    </legend>
+
+                    <label>
+                        Ingrese correo electronico
+                    </label>
+                    <br>
+                    <input type="email" v-model="email" placeholder="ejemplo@correo.com">
+                    <br><br>
+                    <label>
+                        Ingrese contraseña
+                    </label>
+                    <br>
+                    <input type="password" v-model="password" placeholder="*******">
+                    <br><br>
+                    <button @click="login">
+                        Acceder
+                    </button>
+    
+                    
+                </fieldset>
+            </form>
+        </div>
+            
+            <script type="text/javascript">
+                
+                const {createApp}=Vue;
+
+                createApp({
+                    data(){
+                        return{
+                            users:null,
+                            email:'',
+                            password:''
+                        }
+                    }, methods:{
+                        login(e){
+                            var email_user=this.email;
+                            var password_user=this.password;
+
+                            e.preventDefault();
+                            var access = this.users.map(function(u){
+                              
+                                if(email_user==u.email.toLowerCase() ){
+                                    if(password_user==u.password){
+                                        alert("Acceso correcto")
+                                        return true;
+                                    }
+                                }
+                            });
+                            console.log(access);
+
+                            if(access.includes(true)){
+                                window.location.href = "Crud.html";
+                            }else{
+                                alert("Datos incorrectos")
+                            }
+                        }
+                    },mounted(){
+                        fetch('users.json')
+                        .then((res) => res.json())
+                        .then((json) => (this.users = json))
+                        .catch((err) => (console.log(err)))
+                    }
+                }).mount ('#contenedor')  
+            </script>
+</body>
+</html>
