@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Detalles de Pelicula</title>
+        <script src="https://unpkg.com/vue@3"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </head>
+    <body>
+        <div id="contenedor">
+            <form>
+                <fieldset>
+                    <legend>
+                        DETAILS BY MOVIE 
+                    </legend>
+
+                    <ul>
+                        <li >
+                            Se intento
+                            <!-- {{movie.title}} -->
+                        </li>
+                        <li>
+                            Pero no se pudo
+                            <!-- {{}} -->
+                        </li>
+                        <li>
+                            La esperanza es lo ultimo que muere
+                            <!-- {{}} -->
+                        </li>
+                        <li>
+                            Yo habia ponido unos detalles aqui :s
+                        </li>
+                    </ul>
+
+                </fieldset>
+            </form>
+        </div>
+            
+            <script type="text/javascript">
+                
+                const {createApp} = Vue;
+
+                const app = createApp({
+                    data(){
+                        return{
+                            movie: '',
+                            tittle: '',
+                            calificacion: ''
+                        }
+                    }, methods:{
+                        //Aiudaaaa :s
+                        // basta(){
+
+                        //     //var axios = require('axios');
+                        //     var config = {
+                        //     method: 'get',
+                        //     url: 'https://api.themoviedb.org/3/movie/movie.id?api_key=e34b3b423fa2dff96e533b64cf379e4f&language=en-US\n',
+                        //     headers: { }
+                        //     };
+
+                        //     var self = this;
+                        //     axios(config)
+                        //     .then(function (response) {
+                        //        self.tittle=response.data.tittle;
+                        //        self.calificacion=response.data.vote_average
+                        //     console.log(JSON.stringify(response.data));
+                        //     })
+                        //     .catch(function (error) {
+                        //     console.log(error);
+                        //     });
+                        // }
+                        
+                       
+                    },mounted(){
+                        // fetch('users.json')
+                        // .then((res) => res.json())
+                        // .then((json) => (this.users = json))
+                        // .catch((err) => (console.log(err)))
+                    }
+                }).mount ('#contenedor')  
+            </script>
+</body>
+</html>

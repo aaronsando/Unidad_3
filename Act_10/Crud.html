@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Crud de Peliculas</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+        table, th, td{
+            border: 1px solid black;
+        }
+    </style> 
+    </head>
+    <body>
+        <div id="contenedor">
+            
+            <h1>Lista De Peliculas</h1>
+
+            <ul>
+                <li v-for="item in lista">
+                    <img v-bind:src="'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/'+item.poster_path">
+                    {{item.title}}
+                    <button @click="verDetalles(item)">Ver mas...</button>
+                    <hr><br>
+                </li>
+            </ul>
+            <button @click="cargarLista">Cargar</button>
+
+        </div>
+            <script type="text/javascript">
+                const {createApp}=Vue;   
+                createApp({
+                    data(){
+                        return{
+                            lista: [] 
+                        }
+                    }, methods:{
+                        cargarLista(){
+                            //var axios = require('axios');
+                            //var FormData = require('form-data');
+                            var data = new FormData();
+                            var config = {
+                            method: 'get',
+                            url: 'https://api.themoviedb.org/3/movie/popular?api_key=e34b3b423fa2dff96e533b64cf379e4f&language=en-US&page=1',
+                            headers: { 
+                                //...data.getHeaders()
+                            },
+                            data : data
+                            };
+
+                            var mostrar = this
+                            axios(config)
+                            .then(function (response) {
+                                mostrar.lista=response.data.results;
+                                //console.log(JSON.stringify(response.data));
+                            })
+                            .catch(function (error) {
+                            console.log(error);
+                            });
+                        },
+                        verDetalles(item){
+                            window.sessionStorage.getItem(item.id);
+                            console.log(item.id);
+                            window.location.href="Detalles.html";
+                        }
+                       
+                    },
+                    mounted(){
+                        // fetch('users.json')
+                        // .then((res) => res.json())
+                        // .then((json) => (this.users = json))
+                        // .catch((err) => (console.log(err)))
+                    }
+                }).mount ('#contenedor')  
+            </script>
+</body>
+</html>

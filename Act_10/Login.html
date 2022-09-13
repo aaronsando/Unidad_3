@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Login to page</title>
+        <script src="https://unpkg.com/vue@3"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </head>
+    <body>
+        <div id="contenedor">
+            <form>
+                <fieldset>
+                    <legend>
+                        ACCESS DATA 
+                    </legend>
+
+                    <label>
+                        Ingrese usuario
+                    </label>
+                    <br>
+                    <input type="username" v-model="username" placeholder="Username">
+                    <br><br>
+                    <label>
+                        Ingrese contraseña
+                    </label>
+                    <br>
+                    <input type="password" v-model="password" placeholder="*******">
+                    <br><br>
+                    <button @click="login">
+                        Acceder
+                    </button>
+
+                </fieldset>
+            </form>
+        </div>
+            
+            <script type="text/javascript">
+                
+                const {createApp} = Vue;
+
+                const app = createApp({
+                    data(){
+                        return{
+                            username:'',
+                            password:''
+                        }
+                    }, methods:{
+                        login(e){
+                            e.preventDefault();
+                           
+                            //var axios = require('axios');
+                            //var FormData = require('form-data');
+                            var data = new FormData();
+                            data.append('username', this.username);
+                            data.append('password', this.password);
+                            data.append('request_token', '');
+
+                            var config = {
+                            method: 'post',
+                            url: 'https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=e34b3b423fa2dff96e533b64cf379e4f',
+                            headers: { 
+                                //...data.getHeaders()
+                            },
+                            data : data
+                            };
+
+                            axios(config)
+                            .then(function (response) {
+                                if(response.data.success){
+                                    swal("Datos Correctos", "Sesion Iniciada", "success");
+                                    window.location.href = "Crud.html";
+                                }
+                            console.log(JSON.stringify(response.data));
+                            })
+                            .catch(function (error) {
+                                swal("Datos Inorrectos", "Introduza datos validos", "error");
+                            console.log(error);
+                            });
+
+                        }
+                        
+                    },mounted(){
+                        // fetch('users.json')
+                        // .then((res) => res.json())
+                        // .then((json) => (this.users = json))
+                        // .catch((err) => (console.log(err)))
+                    }
+                }).mount ('#contenedor')  
+            </script>
+</body>
+</html>
